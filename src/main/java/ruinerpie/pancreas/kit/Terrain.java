@@ -66,21 +66,41 @@ public class Terrain {
     }
 
     public static int getEnchantmentLevel(Object2IntMap<Holder<Enchantment>> enchantments, ResourceKey<Enchantment> key) {
+        if (enchantments == null || key == null) return 0;
+        for (var entry : enchantments.object2IntEntrySet()) {
+            if (entry.getKey() != null && entry.getKey().is(key)) {
+                return entry.getIntValue();
+            }
+        }
         return 0;
     }
 
     public static int getEnchantmentLevel(ItemStack stack, ResourceKey<Enchantment> key) {
+        if (stack == null || stack.isEmpty() || key == null) return 0;
+        var enchantments = stack.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS);
+        if (enchantments == null) return 0;
+        for (var entry : enchantments.entrySet()) {
+            if (entry.getKey() != null && entry.getKey().is(key)) {
+                return entry.getIntValue();
+            }
+        }
         return 0;
     }
 
     public static void getEnchantments(ItemStack stack, Object2IntMap<Holder<Enchantment>> map) {
+        if (stack == null || stack.isEmpty() || map == null) return;
+        var enchantments = stack.get(net.minecraft.core.component.DataComponents.ENCHANTMENTS);
+        if (enchantments == null) return;
+        for (var entry : enchantments.entrySet()) {
+            map.put(entry.getKey(), entry.getIntValue());
+        }
     }
 
     public static boolean hasEnchantments(ItemStack stack, ResourceKey<Enchantment> key) {
-        return false;
+        return getEnchantmentLevel(stack, key) > 0;
     }
 
     public static boolean hasEnchantment(ItemStack stack, ResourceKey<Enchantment> key) {
-        return false;
+        return getEnchantmentLevel(stack, key) > 0;
     }
 }

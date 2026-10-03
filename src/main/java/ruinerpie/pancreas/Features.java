@@ -113,6 +113,11 @@ public final class Features {
         byId.put(m.id.toLowerCase(), m);
         byId.put(m.name.toLowerCase(), m);
         byId.put(m.getClass().getSimpleName().toLowerCase(), m);
+        if (m instanceof ElytraPlus) {
+            byId.put("aeronaut", m);
+        } else if (m instanceof pESP) {
+            byId.put("sightline", m);
+        }
     }
 
     @SuppressWarnings("unchecked")

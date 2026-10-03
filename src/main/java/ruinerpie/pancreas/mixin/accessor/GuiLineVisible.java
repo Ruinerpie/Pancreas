@@ -19,6 +19,12 @@ import ruinerpie.pancreas.tweaks.extras.*;
 import ruinerpie.pancreas.tweaks.misc.*;
 import ruinerpie.pancreas.tweaks.utilities.*;
 
+import net.minecraft.client.gui.components.ChatComponent;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+
+@Mixin(ChatComponent.Line.class)
 public interface GuiLineVisible {
+    @Accessor("endOfEntry")
     boolean pancreas$isStartOfEntry();
 }

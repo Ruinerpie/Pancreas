@@ -19,9 +19,22 @@ import ruinerpie.pancreas.tweaks.extras.*;
 import ruinerpie.pancreas.tweaks.misc.*;
 import ruinerpie.pancreas.tweaks.utilities.*;
 
+import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.gen.Mutable;
+
+@Mixin(Vec3.class)
 public interface Vec3Access {
-    void pancreas$set(double x, double y, double z);
+    @Accessor("x")
+    @Mutable
     void pancreas$setX(double x);
+
+    @Accessor("y")
+    @Mutable
     void pancreas$setY(double y);
+
+    @Accessor("z")
+    @Mutable
     void pancreas$setZ(double z);
 }

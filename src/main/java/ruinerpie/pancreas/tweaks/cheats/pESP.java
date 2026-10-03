@@ -140,7 +140,7 @@ public class pESP extends Feature {
         .build());
 
     public pESP() {
-        super(Group.Cheats, "sightline", "Highlights entities through walls with customizable bounding boxes and colors.");
+        super(Group.Cheats, "pesp", "Highlights entities through walls with customizable bounding boxes and colors.");
     }
 
     public Color getEntityColor(Entity entity) {

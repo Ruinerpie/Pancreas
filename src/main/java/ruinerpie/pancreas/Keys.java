@@ -40,16 +40,8 @@ public final class Keys {
 
     public boolean onKeyPress(int key) {
         if (key <= 0) return false;
-        net.minecraft.client.gui.screens.Screen s = Minecraft.getInstance().screen;
-        if (s != null) {
-            if (s instanceof net.minecraft.client.gui.screens.ChatScreen ||
-                s instanceof net.minecraft.client.gui.screens.inventory.SignEditScreen ||
-                s instanceof net.minecraft.client.gui.screens.inventory.AnvilScreen ||
-                s instanceof net.minecraft.client.gui.screens.inventory.AbstractCommandBlockEditScreen ||
-                s instanceof net.minecraft.client.gui.screens.inventory.StructureBlockEditScreen ||
-                s instanceof ruinerpie.pancreas.screens.Panel) {
-                return false;
-            }
+        if (Minecraft.getInstance().screen != null) {
+            return false;
         }
         
         if (key == guiKey || key == GLFW.GLFW_KEY_RIGHT_SHIFT) {

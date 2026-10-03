@@ -54,7 +54,7 @@ public class ElytraPlus extends Feature {
         .build());
 
     public ElytraPlus() {
-        super(Group.Cheats, "aeronaut", "Provides unlimited firework boost acceleration while gliding with elytra.");
+        super(Group.Cheats, "elytraplus", "Provides unlimited firework boost acceleration while gliding with elytra.");
     }
 
     @Listen

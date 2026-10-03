@@ -141,4 +141,17 @@ public class Spectre extends Feature {
         camPitch += (float) (dy * 0.15);
         camPitch = Math.max(-90.0f, Math.min(90.0f, camPitch));
     }
+
+    public void updateCamera(net.minecraft.client.renderer.state.level.CameraRenderState state) {
+        if (!isActive() || state == null) return;
+        state.x = camX;
+        state.y = camY;
+        state.z = camZ;
+        state.yRot = camYaw;
+        state.xRot = camPitch;
+    }
+
+    public void applyToCameraState(net.minecraft.client.renderer.state.level.CameraRenderState state) {
+        updateCamera(state);
+    }
 }
