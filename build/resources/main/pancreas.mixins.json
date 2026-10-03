@@ -21,7 +21,10 @@
     "MouseMixin",
     "MovePacketMixin",
     "PlayerMixin",
-    "accessor.ChatAccess"
+    "accessor.ChatAccess",
+    "accessor.GuiLine",
+    "accessor.GuiLineVisible",
+    "accessor.Vec3Access"
   ],
   "client": [
   ],

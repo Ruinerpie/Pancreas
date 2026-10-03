@@ -1,0 +1,13 @@
+.gradle/
+build/
+bin/
+out/
+.idea/
+*.ipr
+*.iws
+*.iml
+.vscode/
+run/
+Pancreas Backup/
+mappings.tiny
+.agents/

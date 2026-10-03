@@ -21,8 +21,8 @@ import ruinerpie.pancreas.tweaks.utilities.*;
 
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Mutable;
 
 @Mixin(Vec3.class)
 public interface Vec3Access {

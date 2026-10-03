@@ -144,11 +144,26 @@ public class Spectre extends Feature {
 
     public void updateCamera(net.minecraft.client.renderer.state.level.CameraRenderState state) {
         if (!isActive() || state == null) return;
-        state.x = camX;
-        state.y = camY;
-        state.z = camZ;
-        state.yRot = camYaw;
-        state.xRot = camPitch;
+        try {
+            for (java.lang.reflect.Field f : state.getClass().getDeclaredFields()) {
+                f.setAccessible(true);
+                String n = f.getName().toLowerCase();
+                if (n.equals("x") || n.contains("posx")) {
+                    if (f.getType() == double.class) f.setDouble(state, camX);
+                    else if (f.getType() == float.class) f.setFloat(state, (float) camX);
+                } else if (n.equals("y") || n.contains("posy")) {
+                    if (f.getType() == double.class) f.setDouble(state, camY);
+                    else if (f.getType() == float.class) f.setFloat(state, (float) camY);
+                } else if (n.equals("z") || n.contains("posz")) {
+                    if (f.getType() == double.class) f.setDouble(state, camZ);
+                    else if (f.getType() == float.class) f.setFloat(state, (float) camZ);
+                } else if (n.equals("yrot") || n.contains("yaw")) {
+                    if (f.getType() == float.class) f.setFloat(state, camYaw);
+                } else if (n.equals("xrot") || n.contains("pitch")) {
+                    if (f.getType() == float.class) f.setFloat(state, camPitch);
+                }
+            }
+        } catch (Exception ignored) {}
     }
 
     public void applyToCameraState(net.minecraft.client.renderer.state.level.CameraRenderState state) {

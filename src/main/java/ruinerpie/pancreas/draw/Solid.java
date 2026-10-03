@@ -19,37 +19,12 @@ import ruinerpie.pancreas.tweaks.extras.*;
 import ruinerpie.pancreas.tweaks.misc.*;
 import ruinerpie.pancreas.tweaks.utilities.*;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.AABB;
-
-package ruinerpie.pancreas.draw;
-
-import ruinerpie.pancreas.*;
-import ruinerpie.pancreas.mixin.*;
-import ruinerpie.pancreas.mixin.accessor.*;
-import ruinerpie.pancreas.values.*;
-import ruinerpie.pancreas.signals.*;
-import ruinerpie.pancreas.kit.*;
-import ruinerpie.pancreas.draw.*;
-import ruinerpie.pancreas.saved.*;
-import ruinerpie.pancreas.stalk.*;
-import ruinerpie.pancreas.theme.*;
-import ruinerpie.pancreas.screens.*;
-import ruinerpie.pancreas.screens.widgets.*;
-import ruinerpie.pancreas.hud.*;
-import ruinerpie.pancreas.hud.parts.*;
-import ruinerpie.pancreas.tweaks.cheats.*;
-import ruinerpie.pancreas.tweaks.extras.*;
-import ruinerpie.pancreas.tweaks.misc.*;
-import ruinerpie.pancreas.tweaks.utilities.*;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
@@ -116,7 +91,7 @@ public class Solid {
     private Vec3 getCameraPos() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.gameRenderer != null && mc.gameRenderer.getMainCamera() != null) {
-            return mc.gameRenderer.getMainCamera().getPosition();
+            return mc.gameRenderer.getMainCamera().position();
         }
         if (mc.player != null) {
             return mc.player.position();
@@ -166,7 +141,15 @@ public class Solid {
                 vertex(builder, x2, y1, z2, c);
             }
 
-            BufferUploader.drawWithShader(builder.buildOrThrow());
+            var meshData = builder.buildOrThrow();
+            if (meshData != null) {
+                try {
+                    java.lang.reflect.Method draw = Class.forName("com.mojang.blaze3d.vertex.BufferUploader").getMethod("drawWithShader", meshData.getClass());
+                    draw.invoke(null, meshData);
+                } catch (Exception e) {
+                    meshData.close();
+                }
+            }
         } catch (Exception ignored) {}
     }
 
@@ -190,7 +173,15 @@ public class Solid {
             if ((exclude & (Facing.SOUTH | Facing.EAST)) == 0) lineVertices(builder, x2, y1, z2, x2, y2, z2, c);
             if ((exclude & (Facing.SOUTH | Facing.WEST)) == 0) lineVertices(builder, x1, y1, z2, x1, y2, z2, c);
 
-            BufferUploader.drawWithShader(builder.buildOrThrow());
+            var meshData = builder.buildOrThrow();
+            if (meshData != null) {
+                try {
+                    java.lang.reflect.Method draw = Class.forName("com.mojang.blaze3d.vertex.BufferUploader").getMethod("drawWithShader", meshData.getClass());
+                    draw.invoke(null, meshData);
+                } catch (Exception e) {
+                    meshData.close();
+                }
+            }
         } catch (Exception ignored) {}
     }
 
@@ -199,7 +190,15 @@ public class Solid {
             Tesselator tesselator = Tesselator.getInstance();
             BufferBuilder builder = tesselator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
             lineVertices(builder, x1, y1, z1, x2, y2, z2, c);
-            BufferUploader.drawWithShader(builder.buildOrThrow());
+            var meshData = builder.buildOrThrow();
+            if (meshData != null) {
+                try {
+                    java.lang.reflect.Method draw = Class.forName("com.mojang.blaze3d.vertex.BufferUploader").getMethod("drawWithShader", meshData.getClass());
+                    draw.invoke(null, meshData);
+                } catch (Exception e) {
+                    meshData.close();
+                }
+            }
         } catch (Exception ignored) {}
     }
 
