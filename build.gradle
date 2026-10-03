@@ -38,16 +38,20 @@ processResources {
     inputs.property 'minecraft_version', project.minecraft_version
     inputs.property 'loader_version', project.loader_version
 
+    def expandProps = [
+            'version': project.version,
+            'minecraft_version': project.minecraft_version,
+            'loader_version': project.loader_version
+    ]
     filesMatching('fabric.mod.json') {
-        expand 'version': project.version,
-                'minecraft_version': project.minecraft_version,
-                'loader_version': project.loader_version
+        expand expandProps
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 25
     it.options.encoding = 'UTF-8'
+    it.options.compilerArgs << "-Xlint:deprecation"
 }
 
 java {
@@ -57,7 +61,8 @@ java {
 }
 
 jar {
+    def archiveName = project.base.archivesName.get()
     from('LICENSE') {
-        rename { "${it}_${project.base.archivesName.get()}" }
+        rename { "${it}_${archiveName}" }
     }
 }

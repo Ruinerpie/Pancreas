@@ -79,7 +79,8 @@ public class Edge extends Feature {
         if (!(mc.hitResult instanceof BlockHitResult hit) || hit.getType() != HitResult.Type.BLOCK) return;
 
         BlockPos pos = hit.getBlockPos();
-        if (hideWhenInsideBlock.get() && mc.level.getBlockState(BlockPos.containing(mc.player.getEyePosition())).isSolid()) {
+        BlockPos eyePos = BlockPos.containing(mc.player.getEyePosition());
+        if (hideWhenInsideBlock.get() && mc.level.getBlockState(eyePos).isSolidRender()) {
             return;
         }
 

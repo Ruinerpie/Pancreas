@@ -1,13 +1,28 @@
+# Gradle temporary files & build outputs
 .gradle/
 build/
 bin/
 out/
+
+# Run directory & Minecraft local logs/saves
+run/
+*.log
+
+# IDE & Editor settings
 .idea/
 *.ipr
 *.iws
 *.iml
 .vscode/
-run/
+.classpath
+.project
+.settings/
+
+# Local cache & backups
 Pancreas Backup/
 mappings.tiny
 .agents/
+
+# System / OS files
+.DS_Store
+Thumbs.db
