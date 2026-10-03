@@ -61,7 +61,7 @@ public class Home extends Panel {
         int panelY = 60;
         int panelH = height - 76; 
 
-        int rightW = 210;
+        int rightW = 230;
         int leftW = panelW - rightW - 8;
         int rightX = panelX + leftW + 8;
 
@@ -113,7 +113,7 @@ public class Home extends Panel {
                 boolean hovered = isHovered(mouseX, mouseY, cx, cy, cardW, cardH);
                 int catColor = Theme.getCategoryColor(cat).getPacked();
                 int fill = hovered ? Theme.surfaceRaised.getPacked() : Theme.surfaceAlt.getPacked();
-                int focus = hovered ? catColor : 0;
+                int focus = 0;
 
                 renderBeveledPanel(graphics, cx, cy, cardW, cardH, false, fill, focus);
                 graphics.fill(cx, cy, cx + 4, cy + cardH, catColor);
@@ -122,7 +122,18 @@ public class Home extends Panel {
                 graphics.text(font, cat.displayName, textLeft, cy + 6, hovered ? Theme.textAccent.getPacked() : catColor, false);
 
                 if (cat.description != null && cardH >= 36) {
-                    graphics.text(font, cat.description, textLeft, cy + 18, Theme.textMuted.getPacked(), false);
+                    int descWidth = font.width(cat.description);
+                    int availDescW = cardW - 40;
+                    if (descWidth > availDescW && hovered) {
+                        int scroll = (int) (((System.currentTimeMillis() - openTimestamp) / 20) % (descWidth + 20));
+                        graphics.enableScissor(textLeft, cy + 18, textLeft + availDescW, cy + 18 + 10);
+                        graphics.text(font, cat.description, textLeft - scroll, cy + 18, Theme.textMuted.getPacked(), false);
+                        graphics.disableScissor();
+                    } else if (descWidth > availDescW) {
+                        graphics.text(font, font.plainSubstrByWidth(cat.description, availDescW - 8) + "...", textLeft, cy + 18, Theme.textMuted.getPacked(), false);
+                    } else {
+                        graphics.text(font, cat.description, textLeft, cy + 18, Theme.textMuted.getPacked(), false);
+                    }
                 }
 
                 List<Feature> mods = Features.get().in(cat);
@@ -142,15 +153,17 @@ public class Home extends Panel {
             graphics.text(font, "Customize overlays & layout", t1X + 28, quickTilesY + 18, Theme.textDisabled.getPacked(), false);
 
             boolean t2Hov = isHovered(mouseX, mouseY, t2X, quickTilesY, tileW, quickTileH);
-            renderBeveledPanel(graphics, t2X, quickTilesY, tileW, quickTileH, false, t2Hov ? Theme.surfaceRaised.getPacked() : Theme.surfaceAlt.getPacked(), t2Hov ? Theme.accentGold.getPacked() : 0);
+            renderBeveledPanel(graphics, t2X, quickTilesY, tileW, quickTileH, false, t2Hov ? Theme.surfaceRaised.getPacked() : Theme.surfaceAlt.getPacked(), 0);
             graphics.fill(t2X, quickTilesY, t2X + 3, quickTilesY + quickTileH, Theme.accentGold.getPacked());
             graphics.text(font, "Loadouts", t2X + 28, quickTilesY + 6, t2Hov ? Theme.textAccent.getPacked() : Theme.accentGold.getPacked(), false);
             graphics.text(font, "Switch profiles & configs", t2X + 28, quickTilesY + 18, Theme.textDisabled.getPacked(), false);
 
         } else {
             
-            graphics.fill(panelX + 4, panelY + 4, panelX + 8, panelY + 4 + headerH, Theme.accentDiamond.getPacked());
-            graphics.text(font, "SEARCH RESULTS", panelX + 14, panelY + 12, Theme.textAccent.getPacked(), false);
+            renderSearchBox(graphics, mouseX, mouseY, leftW, panelY + 4);
+
+            graphics.fill(panelX + 4, panelY + 36, panelX + 8, panelY + 36 + headerH, Theme.accentDiamond.getPacked());
+            graphics.text(font, "SEARCH RESULTS", panelX + 14, panelY + 44, Theme.textAccent.getPacked(), false);
 
             List<Feature> matchedModules = new ArrayList<>();
             for (Feature m : Features.get().all()) {
@@ -400,7 +413,7 @@ public class Home extends Panel {
             int panelH = height - 76;
             int headerH = 24;
 
-            int rightW = 210;
+        int rightW = 230;
             int leftW = panelW - rightW - 8;
             int rightX = panelX + leftW + 8;
 
@@ -620,7 +633,7 @@ public class Home extends Panel {
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         int panelW = Math.min(width - 32, 740);
         int panelX = (width - panelW) / 2;
-        int rightW = 210;
+        int rightW = 230;
         int leftW = panelW - rightW - 8;
 
         if (mouseX > panelX + leftW) {

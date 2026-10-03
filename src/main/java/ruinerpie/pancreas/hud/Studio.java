@@ -120,7 +120,8 @@ public class Studio extends Panel {
             graphics.fill(0, snapLineY, width, snapLineY + 1, 0x994AEDD9);
         }
 
-        renderBeveledPanel(graphics, sidebarX, panelY, sidebarW, panelH, false, Theme.surface.getPacked(), 0);
+        int sidebarBg = (0x99 << 24) | (Theme.surface.getPacked() & 0x00FFFFFF);
+        renderBeveledPanel(graphics, sidebarX, panelY, sidebarW, panelH, false, sidebarBg, 0);
 
         int headerH = 24;
         renderBeveledPanel(graphics, sidebarX + 4, panelY + 4, sidebarW - 8, headerH, true, Theme.surfaceAlt.getPacked(), 0);
@@ -185,17 +186,22 @@ public class Studio extends Panel {
             ctrlY += 24;
             graphics.text(font, "Anchor: " + selectedElement.anchor.name(), sidebarX + 12, ctrlY + 4, Theme.text.getPacked(), false);
             String[] anchors = {"TL", "TR", "BL", "BR", "C"};
+            int btnW = (sidebarW - 32) / 3;
             int ancX = sidebarX + 12;
             int ancY = ctrlY + 16;
             for (int i = 0; i < anchors.length; i++) {
+                if (i == 3) {
+                    ancX = sidebarX + 12;
+                    ancY += 20;
+                }
                 Part.Anchor a = Part.Anchor.values()[i];
                 boolean aSel = selectedElement.anchor == a;
-                boolean aHov = isHovered(mouseX, mouseY, ancX, ancY, 32, 16);
-                renderSlotButton(graphics, ancX, ancY, 32, 16, anchors[i], aHov, aSel, aSel ? Theme.accentPurple.getPacked() : 0);
-                ancX += 36;
+                boolean aHov = isHovered(mouseX, mouseY, ancX, ancY, btnW, 16);
+                renderSlotButton(graphics, ancX, ancY, btnW, 16, anchors[i], aHov, aSel, aSel ? Theme.accentPurple.getPacked() : 0);
+                ancX += btnW + 4;
             }
 
-            ctrlY += 38;
+            ctrlY += 58;
             boolean rstHov = isHovered(mouseX, mouseY, sidebarX + 12, ctrlY, sidebarW - 24, 20);
             renderSlotButton(graphics, sidebarX + 12, ctrlY, sidebarW - 24, 20, "RESET ELEMENT", rstHov, false, Theme.accentGold.getPacked());
         } else {

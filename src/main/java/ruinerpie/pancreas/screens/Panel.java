@@ -176,7 +176,8 @@ public abstract class Panel extends Screen {
 
     protected void renderTabs(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         NavTab[] tabs = NavTab.values();
-        int tabW = 68;
+        int availableW = width - 40;
+        int tabW = Math.max(68, availableW / tabs.length);
         int tabH = 26;
         int totalW = tabs.length * tabW;
         int startX = (width - totalW) / 2;
@@ -263,9 +264,12 @@ public abstract class Panel extends Screen {
     }
 
     protected void renderSearchBox(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int boxW) {
+        renderSearchBox(graphics, mouseX, mouseY, boxW, 36);
+    }
+
+    protected void renderSearchBox(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int boxW, int searchY) {
         int searchW = boxW;
         int searchX = (width - searchW) / 2;
-        int searchY = 36;
         int searchH = 20;
 
         if (searchShakeTime > 0) {

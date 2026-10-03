@@ -74,9 +74,6 @@ public class CombatView extends Part {
             if (fillW > 0) {
                 ctx.graphics.fill(barX + 1, barY + 1, barX + 1 + fillW, barY + barH - 1, Theme.accentRed.getPacked());
             }
-        } else {
-            ctx.graphics.text(ctx.mc.font, "No Target", renderX + 6, renderY + 6, Theme.textDisabled.getPacked(), false);
-            ctx.graphics.text(ctx.mc.font, "Aim at entity", renderX + 6, renderY + 18, Theme.textMuted.getPacked(), false);
         }
     }
 }
