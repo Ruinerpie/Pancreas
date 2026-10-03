@@ -1,0 +1,76 @@
+package ruinerpie.pancreas;
+
+import ruinerpie.pancreas.*;
+import ruinerpie.pancreas.mixin.*;
+import ruinerpie.pancreas.mixin.accessor.*;
+import ruinerpie.pancreas.values.*;
+import ruinerpie.pancreas.signals.*;
+import ruinerpie.pancreas.kit.*;
+import ruinerpie.pancreas.draw.*;
+import ruinerpie.pancreas.saved.*;
+import ruinerpie.pancreas.stalk.*;
+import ruinerpie.pancreas.theme.*;
+import ruinerpie.pancreas.screens.*;
+import ruinerpie.pancreas.screens.widgets.*;
+import ruinerpie.pancreas.hud.*;
+import ruinerpie.pancreas.hud.parts.*;
+import ruinerpie.pancreas.tweaks.cheats.*;
+import ruinerpie.pancreas.tweaks.extras.*;
+import ruinerpie.pancreas.tweaks.misc.*;
+import ruinerpie.pancreas.tweaks.utilities.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public final class Toasts {
+    private static final Toasts INSTANCE = new Toasts();
+    private static final Logger LOG = LoggerFactory.getLogger("Pancreas-Notifications");
+
+    public static Toasts get() {
+        return INSTANCE;
+    }
+
+    private final List<Toast> notifications = new ArrayList<>();
+
+    public void add(String title, String message, Toast.Type type) {
+        Toast notification = new Toast(title, message, type);
+        synchronized (notifications) {
+            notifications.add(notification);
+            if (notifications.size() > 50) {
+                notifications.remove(0);
+            }
+        }
+
+        switch (type) {
+            case INFO, SUCCESS -> LOG.info("[{}] {}", title, message);
+            case WARNING -> LOG.warn("[{}] {}", title, message);
+            case ERROR -> LOG.error("[{}] {}", title, message);
+        }
+    }
+
+    public void info(String title, String message) {
+        add(title, message, Toast.Type.INFO);
+    }
+
+    public void warning(String title, String message) {
+        add(title, message, Toast.Type.WARNING);
+    }
+
+    public void error(String title, String message) {
+        add(title, message, Toast.Type.ERROR);
+    }
+
+    public void success(String title, String message) {
+        add(title, message, Toast.Type.SUCCESS);
+    }
+
+    public List<Toast> getNotifications() {
+        synchronized (notifications) {
+            return Collections.unmodifiableList(new ArrayList<>(notifications));
+        }
+    }
+}

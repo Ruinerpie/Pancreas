@@ -1,0 +1,31 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ruinerpie.pancreas.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "ChatMixin",
+    "ConnectionMixin",
+    "ContainerScreenMixin",
+    "CreativeScreenMixin",
+    "EffectInstanceMixin",
+    "EntityMixin",
+    "GameModeMixin",
+    "GuiMixin",
+    "KeyboardMixin",
+    "LevelDataMixin",
+    "LevelMixin",
+    "LivingEntityMixin",
+    "MinecraftMixin",
+    "MobBucketMixin",
+    "MouseMixin",
+    "MovePacketMixin",
+    "PlayerMixin",
+    "accessor.ChatAccess"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

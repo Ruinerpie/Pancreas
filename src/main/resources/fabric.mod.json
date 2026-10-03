@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "pancreas",
+  "version": "${version}",
+  "name": "Pancreas",
+  "description": "A lightweight, configurable utility mod for Minecraft.",
+  "authors": [
+    "RuinerPie"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ruinerpie/pancreas"
+  },
+  "license": "All Rights Reserved",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "ruinerpie.pancreas.Pancreas"
+    ],
+    "modmenu": [
+      "ruinerpie.pancreas.PancreasModMenu"
+    ]
+  },
+  "mixins": [
+    "pancreas.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=26.1.1",
+    "java": ">=25",
+    "fabric-api": "*",
+    "mixinextras": "*"
+  }
+}
