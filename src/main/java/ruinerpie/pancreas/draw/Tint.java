@@ -1,0 +1,31 @@
+package ruinerpie.pancreas.draw;
+
+import ruinerpie.pancreas.*;
+import ruinerpie.pancreas.mixin.*;
+import ruinerpie.pancreas.mixin.accessor.*;
+import ruinerpie.pancreas.values.*;
+import ruinerpie.pancreas.signals.*;
+import ruinerpie.pancreas.kit.*;
+import ruinerpie.pancreas.draw.*;
+
+public class Tint extends Color {
+    public Tint(int r, int g, int b, int a) {
+        super(r, g, b, a);
+    }
+
+    public Tint(int r, int g, int b) {
+        super(r, g, b, 255);
+    }
+
+    public Tint(int packed) {
+        super(packed);
+    }
+
+    public Tint(Color other) {
+        super(other);
+    }
+
+    public Tint() {
+        super();
+    }
+}

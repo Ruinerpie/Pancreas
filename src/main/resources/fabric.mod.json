@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "pancreas",
+  "version": "${version}",
+  "name": "Pancreas",
+  "description": "A FANTASTIC MOD.",
+  "authors": [
+    "Ruinerpie"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/pancreas",
+    "sources": "https://github.com/ruinerpie/pancreas"
+  },
+  "license": "All Rights Reserved",
+  "icon": "assets/pancreas/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "ruinerpie.pancreas.Pancreas"
+    ],
+    "modmenu": [
+      "ruinerpie.pancreas.PancreasModMenu"
+    ]
+  },
+  "mixins": [
+    "pancreas.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": ">=26.1.1",
+    "java": ">=25",
+    "fabric-api": "*",
+    "mixinextras": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}
